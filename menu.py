@@ -23,7 +23,7 @@ class Pant(pg.sprite.Sprite):
     def main(self):
         # img_gok = pg.image.load('./resource/goku/goku-sprites.png')
         m = spritegoku()
-        goku = Personaje(m, 660, 620)
+        goku = Personaje(m, 710, 580)
         jugadores = pg.sprite.Group()
         jugadores.add(goku)
         reloj = pg.time.Clock()
@@ -34,7 +34,7 @@ class Pant(pg.sprite.Sprite):
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_a:
                         fin = True
-            self.pantalla.fill(BLANCO)
+            self.pantalla.fill(VERDE)
             pg.display.flip()
             reloj.tick(rl)
 
@@ -48,21 +48,28 @@ class Pant(pg.sprite.Sprite):
                         goku.accion = 'walk'
                         goku.dir = 0
                         goku.con = 0
-                        goku.vel_x = 6
-                        rl = 8.7
+                        goku.vel_x = 6.8
+                        rl = 8.9
 
                     if event.key == pg.K_LEFT:
                         goku.accion = 'walk'
                         goku.dir = 1
                         goku.con = 0
-                        goku.vel_x = -6
-                        rl = 8.7
+                        goku.vel_x = -6.8
+                        rl = 8.9
 
                     if event.key == pg.K_a:
                         goku.accion = 'golpe2'
                         goku.con = 0
                         goku.vel_x = 0
-                        rl = 8
+                        rl = 8.7
+                        goku.activateaccion = True
+
+                    if event.key == pg.K_s:
+                        goku.accion = 'golpe1'
+                        goku.con = 0
+                        goku.vel_x = 0
+                        rl = 8.7
 
                 if event.type == pg.KEYUP:
                     if event.key == pg.K_RIGHT:
@@ -76,7 +83,6 @@ class Pant(pg.sprite.Sprite):
                         goku.dir = 1
                         goku.con = 0
                         goku.vel_x = 0
-
                     # if event.key == pg.K_a:
                     #     goku.accion = 'standby'
                     #     goku.con = 0
@@ -84,7 +90,7 @@ class Pant(pg.sprite.Sprite):
 
 
             jugadores.update()
-            self.pantalla.fill(BLANCO)
+            self.pantalla.fill(VERDE)
             jugadores.draw(self.pantalla)
             pg.display.flip()
             reloj.tick(rl)
@@ -105,28 +111,29 @@ class Personaje(pg.sprite.Sprite):
         self.vel_x = 0
         self.vel_y = 0
         self.objs = pg.sprite.Group()
+        self.activateaccion = False
 
     def update(self):
         self.lim = len(self.m[self.accion][self.dir])-1
 
-        if (self.accion != 'golpe2') or (self.accion != 'morir') or (self.accion != 'golpe1') or (self.accion != 'kame'):
+        if (self.accion != 'golpe2') and (self.accion != 'morir') and (self.accion != 'golpe1') and (self.accion != 'kame'):
             if self.con < self.lim:
                 self.con +=1
             else:
                 self.con = 0
 
-        if (self.accion == 'golpe2') or (self.accion == 'morir') or (self.accion == 'golpe1') or (self.accion == 'kame'):
-            if self.con < self.lim:
-                self.con +=1
-            else:
-                self.con = 0
-                self.accion = 'standby'
+        if self.activateaccion:
+            if (self.accion == 'golpe2'):
+                if self.con < self.lim:
+                    self.con +=1
+                else:
+                    self.con = 0
+                    self.accion = 'standby'
+                    self.vel_x = 0
+                    self.activateaccion = False
 
         self.lis = self.m[self.accion]
-        # self.image = self.lis[self.dir][self.con]
         self.image = pg.transform.scale(self.lis[self.dir][self.con], [self.rect.width * 3,self.rect.height * 3])
-        print('con: ',self.con)
-        print('lim: ',self.lim)
         self.rect.x += self.vel_x
         self.rect.y += self.vel_y
 
@@ -144,7 +151,7 @@ class Personaje(pg.sprite.Sprite):
 
 if __name__ == '__main__':
     pg.init()
-    print("Hola")
+
 
 
     pantalla = Pant()
