@@ -30,3 +30,10 @@ def spritegoku():
             'kame': recortar(pg.image.load('./resource/goku/kame.png'), 25, 32, 2, 3),
             'morir': recortar(pg.image.load('./resource/goku/morir.png'), 31, 32, 2, 4)}
     return gok
+
+def spriteminion1():
+    minion1 = {'standby': recortar(pg.image.load('./resource/enemigos/minion/minion1/standby.png'), 15, 31, 1, 1),
+            'walk': recortar(pg.image.load('./resource/enemigos/minion/minion1/walk.png'), 15, 31, 1, 4),
+            'golpe': recortar(pg.image.load('./resource/enemigos/minion/minion1/golpe.png'), 23, 31, 1, 4),
+            'poder': recortar(pg.image.load('./resource/enemigos/minion/minion1/poder.png'), 23, 31, 1, 3),}
+    return minion1
