@@ -16,7 +16,7 @@ class Pant(pg.sprite.Sprite):
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
         self.ancho = 660
-        self.alto = 620
+        self.alto = 640
         self.pantalla = pg.display.set_mode([self.ancho, self.alto])
         pg.display.set_caption("DBZ")
 
@@ -25,8 +25,8 @@ class Pant(pg.sprite.Sprite):
         fondo = pg.image.load('./resource/mapas/mapa1/mapa1.png')
         m = spritegoku()
         m2 = spriteminion1()
-        goku = Personaje(m, 710, 580)
-        minion = Minion1(m2, 710, 580)
+        goku = Personaje(m, 768, 580)
+        minion = Minion1(m2, 768, 580)
         enemigos = pg.sprite.Group()
         enemigos.add(minion)
         jugadores = pg.sprite.Group()
@@ -101,7 +101,7 @@ class Pant(pg.sprite.Sprite):
 
             enemigos.update()
             jugadores.update()
-            self.pantalla.fill(VERDE)
+            self.pantalla.blit(fondo, [0,0])
             jugadores.draw(self.pantalla)
             enemigos.draw(self.pantalla)
             pg.display.flip()
@@ -119,7 +119,7 @@ class Personaje(pg.sprite.Sprite):
         self.image = self.lis[self.dir][self.con]
         self.rect = self.image.get_rect()
         self.rect.x = (ancho/2)-16
-        self.rect.y = (alto/2)-16
+        self.rect.y = (alto/2)+66
         self.vel_x = 0
         self.vel_y = 0
         self.objs = pg.sprite.Group()
@@ -135,14 +135,13 @@ class Personaje(pg.sprite.Sprite):
                 self.con = 0
 
         if self.activateaccion:
-            if (self.accion == 'golpe2') or (self.accion == 'golpe1'):
-                if self.con < self.lim:
-                    self.con +=1
-                else:
-                    self.con = 0
-                    self.accion = 'standby'
-                    self.vel_x = 0
-                    self.activateaccion = False
+            if self.con < self.lim:
+                self.con +=1
+            else:
+                self.con = 0
+                self.accion = 'standby'
+                self.vel_x = 0
+                self.activateaccion = False
 
         self.lis = self.m[self.accion]
         self.image = pg.transform.scale(self.lis[self.dir][self.con], [self.rect.width * 3,self.rect.height * 3])
@@ -160,7 +159,7 @@ class Minion1(pg.sprite.Sprite):
         self.image = self.m[self.accion][0][self.con]
         self.rect = self.image.get_rect()
         self.rect.x = (ancho/2)+45
-        self.rect.y = (alto/2)-16
+        self.rect.y = (alto/2)+66
         self.vel_x = 0
         self.vel_y = 0
         self.objs = pg.sprite.Group()
