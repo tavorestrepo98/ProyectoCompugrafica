@@ -54,3 +54,7 @@ def spritepoder1():
 def spritekame():
     poder1 = {'kame': recortar(pg.image.load('./resource/poderes/kame/kame.png'), 61, 23, 1, 2)}
     return poder1
+
+def spritepoderm():
+    poderm = {'poderm': recortar(pg.image.load('./resource/poderes/poderminion/poder.png'), 13, 8, 1, 2)}
+    return poderm
