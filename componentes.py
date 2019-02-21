@@ -46,3 +46,11 @@ def spriteminion2():
             'golpe': recortar(pg.image.load('./resource/enemigos/minion/minion2/golpe.png'), 24, 31, 1, 4),
             'poder': recortar(pg.image.load('./resource/enemigos/minion/minion2/poder.png'), 23, 30, 1, 3),}
     return minion2
+
+def spritepoder1():
+    poder1 = {'poder1': recortar(pg.image.load('./resource/poderes/kame/poder1.png'), 16, 16, 2, 3)}
+    return poder1
+
+def spritekame():
+    poder1 = {'kame': recortar(pg.image.load('./resource/poderes/kame/kame.png'), 61, 23, 1, 2)}
+    return poder1
