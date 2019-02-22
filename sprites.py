@@ -30,6 +30,7 @@ class Personaje(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = (ancho/2)-16
         self.rect.y = (alto/2)+66
+        self.yini = (alto/2)+66
         self.vel_x = 0
         self.vel_y = 0
         self.objs = pg.sprite.Group()
@@ -42,8 +43,24 @@ class Personaje(pg.sprite.Sprite):
         self.nivel = 1
         self.barra = 0
         self.resistencia = 0
+        self.salto = False
+
+    def gravedad(self, v):
+        if self.vel_y == 0:
+            self.vel_y = 1
+        else:
+            self.vel_y += v
 
     def update(self):
+        self.gravedad(0.9)
+        self.rect.x += self.vel_x
+        self.rect.y += self.vel_y
+
+        if (self.rect.y > self.yini) and not(self.vel_y == 0):
+            self.vel_y = 0
+            self.rect.y = self.yini
+            self.accion = 'salto'
+            self.con = 0
 
         if self.barra == 100:
             self.nivel += 1
@@ -51,13 +68,13 @@ class Personaje(pg.sprite.Sprite):
             self.resistencia += 5
         self.lim = len(self.m[self.accion][self.dir])-1
 
-        if (self.accion != 'golpe2') and (self.accion != 'morir') and (self.accion != 'golpe1') and (self.accion != 'kame'):
+        if (self.accion != 'golpe2') and (self.accion != 'morir') and (self.accion != 'golpe1') and (self.accion != 'kame') and (self.accion != 'salto'):
             if self.con < self.lim:
                 self.con +=1
             else:
                 self.con = 0
 
-        if self.activateaccion:
+        if self.activateaccion and not(self.accion == 'jump'):
             if self.con < self.lim:
                 self.con +=1
             else:
@@ -66,10 +83,19 @@ class Personaje(pg.sprite.Sprite):
                 self.vel_x = 0
                 self.activateaccion = False
 
+        if self.activateaccion and (self.accion == 'jump'):
+            if self.con < self.lim:
+                self.con +=1
+            else:
+                self.con = 0
+                self.accion = 'salto'
+                self.activateaccion = False
+
+
+
         self.lis = self.m[self.accion]
         self.image = pg.transform.scale(self.lis[self.dir][self.con], [self.rect.width * 3,self.rect.height * 3])
-        self.rect.x += self.vel_x
-        self.rect.y += self.vel_y
+
 
 
 class Minion1(pg.sprite.Sprite):

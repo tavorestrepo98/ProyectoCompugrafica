@@ -28,10 +28,10 @@ contador=0
 
 
 class orbes(pg.sprite.Sprite):
-    def __init__(self,x,y):
+    def __init__(self, m, x, y):
         pg.sprite.Sprite.__init__(self)
-        self.image = pg.Surface([15, 20])
-        self.image.fill(BLANCO)
+        self.m = m
+        self.image = self.m[0][0]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -39,8 +39,7 @@ class orbes(pg.sprite.Sprite):
         self.posx_fondo=0
 
     def update(self):
-        self.image = pg.Surface([15, 20])
-        self.image.fill(BLANCO)
+        self.image = pg.transform.scale(self.m[0][0], [self.rect.width * 2, self.rect.height * 2])
         self.rect.x = self.xini + self.posx_fondo
 
 
@@ -56,7 +55,7 @@ if __name__ == '__main__':
     m = spritegoku()
     m2 = spriteminion1()
     m3 = spritejeice()
-
+    mo = recortar(pg.image.load('./resource/poderes/orb.png'), 8, 15, 1, 1)
 
     for e in posxe:
         minion = Minion1(m2, e, 580)
@@ -103,9 +102,9 @@ if __name__ == '__main__':
                 goku.accion = 'run'
                 goku.dir = 0
                 goku.con = 0
-                goku.vel_x = 18
-                rl = 9
-                velx_fondo = -20
+                goku.vel_x = 14
+                rl = 12
+                velx_fondo = -15
 
         if goku.accion == 'run':
             if (keystate[pg.K_SPACE]==0)and(keystate[pg.K_LEFT]==1):
@@ -113,7 +112,8 @@ if __name__ == '__main__':
                 goku.dir = 1
                 goku.con = 0
                 goku.vel_x = -8
-                rl = 12
+                rl = 10
+                velx_fondo = - 8
         else:
             if (keystate[pg.K_SPACE]==1)and(keystate[pg.K_LEFT]==1):
                 goku.accion = 'run'
@@ -121,6 +121,7 @@ if __name__ == '__main__':
                 goku.con = 0
                 goku.vel_x = -14
                 rl = 12
+                velx_fondo = -15
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -141,6 +142,13 @@ if __name__ == '__main__':
                     goku.vel_x = -8
                     rl = 12
 
+                if event.key == pg.K_UP:
+                    if goku.activateaccion == False:
+                        goku.accion = 'jump'
+                        goku.con = 0
+                        goku.salto = True
+                        rl = 12
+                        goku.activateaccion = True
                 if event.key == pg.K_a:
                     if goku.activateaccion == False:
                         goku.accion = 'golpe2'
@@ -152,7 +160,7 @@ if __name__ == '__main__':
                         for i in ls_colje:
                             i.vida-=10
                             if i.vida<=0:
-                                orb=orbes(i.rect.x,i.rect.y)
+                                orb=orbes(mo, i.rect.x,i.rect.y + 70)
                                 ob.add(orb)
                                 i.kill()
 
@@ -190,6 +198,11 @@ if __name__ == '__main__':
                     goku.con = 0
                     goku.vel_x = 0
 
+        if goku.salto:
+            goku.activateaccion = True
+            goku.vel_y = -10
+            goku.salto = False
+
         for b in balas:
             b.velx_fondo = 0
         for b2 in balaenemiga:
@@ -208,13 +221,13 @@ if __name__ == '__main__':
         if (posx_fondo * -1) > lim_pantalla:
             posx_fondo = lim_pantalla * -1
 
-        if(goku.rect.x <= 20) and (goku.vel_x < 0):
-            goku.rect.x = 24
+        if(goku.rect.x <= 120) and (goku.vel_x < 0):
+            goku.rect.x = 120
             posx_fondo -= velx_fondo
             for b in balas:
-                b.velx_fondo = velx_fondo*-1
+                b.velx_fondo = velx_fondo*1
             for b2 in balaenemiga:
-                b2.velx_fondo = velx_fondo*-1
+                b2.velx_fondo = velx_fondo*1
 
         if posx_fondo >= 0:
             posx_fondo = 0
@@ -236,9 +249,9 @@ if __name__ == '__main__':
                         e.activateaccion = True
                         e.rect.x -= 4
                         b = Poderm(spritepoderm(), [e.rect.x - 16, e.rect.y + 30])
-                        b.vel_x = -3
+                        b.vel_x = -7
                         balaenemiga.add(b)
-                        rl = 20
+                        rl = 12
                         contador=0
 
             elif math.fabs(goku.rect.x - e.rect.x) < 40:
@@ -268,15 +281,24 @@ if __name__ == '__main__':
                     e.vida-=20
                     b.kill()
                 if e.vida<=0:
-                    orb=orbes(e.rect.x,e.rect.y)
+                    orb=orbes(mo, e.rect.x,e.rect.y + 70)
                     ob.add(orb)
                     e.kill()
+
         ls_ob = pg.sprite.spritecollide(goku, ob, False)
         for o in ls_ob:
             goku.ki+=6
             o.kill()
             if goku.ki >= 96:
                 goku.ki=96
+
+        for  o in ob:
+            if math.fabs(goku.rect.x - o.rect.x) < 15:
+                goku.ki+=6
+                o.kill()
+                if goku.ki >= 96:
+                    goku.ki=96
+
 
 
 

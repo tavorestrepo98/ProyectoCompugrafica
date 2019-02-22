@@ -30,7 +30,8 @@ def spritegoku():
             'golpe2': recortar(pg.image.load('./resource/goku/golpe2.png'), 24, 31, 2, 4),
             'kame': recortar(pg.image.load('./resource/goku/kame.png'), 25, 32, 2, 3),
             'morir': recortar(pg.image.load('./resource/goku/morir.png'), 31, 32, 2, 4),
-            'jump': recortar(pg.image.load('./resource/goku/jump.png'), 26, 32, 2, 4)}
+            'jump': recortar(pg.image.load('./resource/goku/jump.png'), 26, 32, 2, 4),
+            'salto': recortar(pg.image.load('./resource/goku/salto.png'), 26, 32, 2, 1)}
     return gok
 
 def spriteminion1():
