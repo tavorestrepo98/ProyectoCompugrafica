@@ -36,7 +36,7 @@ class Personaje(pg.sprite.Sprite):
         self.objs = pg.sprite.Group()
         self.posx_fondo = 0
         self.activateaccion = False
-        self.salud = 215
+        self.salud = 182
         self.ki=96
         self.fuerza_inicial = 20
         self.fuerza = 20

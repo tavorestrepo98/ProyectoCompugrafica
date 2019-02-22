@@ -1,17 +1,20 @@
 import pygame
 import math
 import random
+import sys, os
+
 ancho=660
 alto=640
 centro=[33,32]
 blanco=[255,255,255]
 negro=[0,0,0]
 
+if sys.platform in ["win32","win64"]: os.environ["SDL_VIDEO_CENTERED"]="1"
 
-if __name__ == '__main__':
+def epilogo2(pant):
     #inicializacion
     pygame.init()
-    pantalla=pygame.display.set_mode([ancho,alto])
+    pantalla=pant
     #imagenes
     fondo=pygame.image.load('fondo1.jpg')
     goku1=pygame.image.load('goku1.png')
@@ -32,12 +35,12 @@ if __name__ == '__main__':
     fuente=pygame.font.SysFont("comicsansms",15)
     texto1=fuente.render("Cada vez estoy mas cerca de ti Freezer",True,negro)
     texto2=fuente.render("No Puude ser!!!!!!",True,negro)
-    texto3=fuente.render("Rindete Freezer",True,negro)
-    texto4=fuente.render("Aun tengo un As bajo la manga",True,negro)
+    texto3=fuente.render("Te encontrare Freezer",True,negro)
+    texto4=fuente.render("Te espera una sorpresa Jajaja",True,negro)
     texto5=fuente.render("De que hablas?????",True,negro)
-    texto6=fuente.render("Aun No has acabado con todos mis hombres",True,negro)
+    texto6=fuente.render("Aun No has acabado con todos mis Hombres",True,negro)
     texto7=fuente.render("Es imposible!!!!",True,negro)
-    texto8=fuente.render("Goku vete depidiendo de Tu esposa",True,negro)
+    texto8=fuente.render("Perderas a tu esposa",True,negro)
 
     lista_texto=[texto1,texto2,texto3,texto4,texto5,texto6,texto7,texto8]
 
@@ -93,6 +96,7 @@ if __name__ == '__main__':
             pantalla.fill([0,0,0])
             pantalla=pygame.display.set_mode([ancho,alto])
             pantalla.blit(fondo,[0,0])
+            fin = True
             '''pantalla.blit(goku1,[0,50])
             pantalla.blit(freezer1,[490,440])'''
 
@@ -100,3 +104,4 @@ if __name__ == '__main__':
         pantalla.fill([0,0,0])
         pantalla=pygame.display.set_mode([ancho,alto])
         pantalla.blit(fondo,[0,0])'''
+    

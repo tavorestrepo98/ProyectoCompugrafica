@@ -2,9 +2,11 @@ import pygame as pg
 from componentes import *
 import sys, os
 import epilogo1 as ep1
+import epilogo2 as ep2
 import math
 import random
 from sprites import *
+import nivel2
 
 if sys.platform in ["win32","win64"]: os.environ["SDL_VIDEO_CENTERED"]="1"
 
@@ -19,44 +21,46 @@ ancho = 660
 alto = 640
 dist_ataque = 300
 
-balas = pg.sprite.Group()
-jugadores = pg.sprite.Group()
-enemigos = pg.sprite.Group()
-balaenemiga = pg.sprite.Group()
-ob = pg.sprite.Group()
-contador=0
-
 
 class orbes(pg.sprite.Sprite):
-    def __init__(self, m, x, y):
+    def __init__(self, m, pos):
         pg.sprite.Sprite.__init__(self)
         self.m = m
         self.image = self.m[0][0]
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.xini = x
+        self.rect.x = pos[0]
+        self.rect.y = pos[1]
+        self.xini = pos[1]
         self.posx_fondo=0
 
     def update(self):
-        self.image = pg.transform.scale(self.m[0][0], [self.rect.width * 2, self.rect.height * 2])
         self.rect.x = self.xini + self.posx_fondo
+        self.image = pg.transform.scale(self.m[0][0], [self.rect.width * 2, self.rect.height * 2])
 
 
-if __name__ == '__main__':
+def menu(pant):
     pg.init()
-    pantalla = pg.display.set_mode([ancho,alto])
+    balas = pg.sprite.Group()
+    jugadores = pg.sprite.Group()
+    enemigos = pg.sprite.Group()
+
+    balaenemiga = pg.sprite.Group()
+    ob = pg.sprite.Group()
+    contador=0
+    pantalla = pant
     pg.display.set_caption("DBZ")
     print('=================INICIANDO===================')
 
-    fondo = pg.image.load('./resource/mapas/mapa1/mapa1.png')
+    fondo = pg.image.load('./resource/mapas/mapa2/map2.png')
     vida = pg.image.load('./resource/barlife.png')
     posxe = [1000,1100,2000,2100,3000,3100,4000,4100,5000,5100,6000,6100,7000,7100,8000,8100,9000,9100,10000,11000,11000,11100,12000,12100]
     m = spritegoku()
     m2 = spriteminion1()
     m3 = spritejeice()
     mo = recortar(pg.image.load('./resource/poderes/orb.png'), 8, 15, 1, 1)
-
+    pg.mixer.music.load('resource/sonidos/menu2.ogg')
+    pg.mixer.music.set_volume(0.2)
+    pg.mixer.music.play(-1)
     for e in posxe:
         minion = Minion1(m2, e, 580)
         enemigos.add(minion)
@@ -125,15 +129,20 @@ if __name__ == '__main__':
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
+                fin = True
                 pg.quit()
                 sys.exit()
             if event.type == pg.KEYDOWN:
+                if event.key == pg.K_t:
+                    ep2.epilogo2(pantalla)
+                    nivel2.menu(pantalla)
                 if event.key == pg.K_RIGHT:
                     goku.accion = 'walk'
                     goku.dir = 0
                     goku.con = 0
                     goku.vel_x = 8
                     rl = 12
+
 
                 if event.key == pg.K_LEFT:
                     goku.accion = 'walk'
@@ -153,7 +162,7 @@ if __name__ == '__main__':
                         for i in ls_colje:
                             i.vida-=10
                             if i.vida<=0:
-                                orb=orbes(mo, i.rect.x + random.randint(-10, 10) + posx_fondo,i.rect.y + 70)
+                                orb=orbes(mo,[ i.rect.x + random.randint(-5, 40),i.rect.y + 70])
                                 ob.add(orb)
                                 i.kill()
 
@@ -226,6 +235,10 @@ if __name__ == '__main__':
         for o in ob:
             o.posx_fondo = posx_fondo
 
+        if goku.salud <= 0:
+            print("GAME OVER")
+            fin = True
+
 
         for e in enemigos:
             if (math.fabs(goku.rect.x - e.rect.x) < dist_ataque) and (math.fabs(goku.rect.x - e.rect.x)>40):
@@ -247,6 +260,9 @@ if __name__ == '__main__':
                     e.accion = 'golpe'
                     e.con = 0
                     e.activateaccion = True
+                    ls_ene = pg.sprite.spritecollide(e, jugadores, False)
+                    for i in ls_ene:
+                        goku.salud-=2
                 # if e.temp == 0:
                 #     # e.accion = 'standby'
                 #     pass
@@ -255,11 +271,11 @@ if __name__ == '__main__':
 
         for e in balaenemiga:
             if e.rect.x <= (goku.rect.x + (goku.rect.width*2)):
-                salud_g-=4
+                goku.salud-=2
                 e.kill()
-            '''if salud_g<=0:
+            if goku.salud<=0:
                 goku.accion='morir'
-                salud_g=0'''
+                goku.salud=0
 
 
         for e in enemigos:
@@ -269,7 +285,7 @@ if __name__ == '__main__':
                     e.vida-=20
                     b.kill()
                 if e.vida<=0:
-                    orb=orbes(mo, e.rect.x,e.rect.y + 70)
+                    orb=orbes(mo, [e.rect.x + random.randint(-10, 40),e.rect.y + 70])
                     ob.add(orb)
                     e.kill()
 
@@ -287,8 +303,9 @@ if __name__ == '__main__':
                 if goku.ki >= 96:
                     goku.ki=96
 
-
-
+        if (goku.salud > 0) and (jeice.vida <= 0):
+            ep2.epilogo2(pantalla)
+            nivel2.inicio(pantalla)
 
         jugadores.update()
         balas.update()
@@ -300,7 +317,7 @@ if __name__ == '__main__':
         pantalla.blit(fondo, [posx_fondo,0])
         pg.draw.rect(pantalla,[127,127,127],[30,30,215,18])
         pg.draw.rect(pantalla,[127,127,127],[30,45,132,14])
-        pg.draw.rect(pantalla,VERDE,[30,30,salud_g,18])
+        pg.draw.rect(pantalla,VERDE,[66,30,goku.salud,18])
         pg.draw.rect(pantalla,AZUL,[66,45,goku.ki,14])
         pantalla.blit(vida,[0,0])
 

@@ -20,6 +20,12 @@ def recortar(imagen, ancho, alto, fil, col):
         l2 = []
     return l1
 
+def spritecapitan():
+    cap = {'standby': recortar(pg.image.load('./resource/enemigos/capitan/standby.png'), 12, 31, 1, 1),
+            'walk': recortar(pg.image.load('./resource/enemigos/capitan/walk.png'), 15, 31, 1, 4),
+            'golpe': recortar(pg.image.load('./resource/enemigos/capitan/golpe.png'), 23, 30, 1, 3),
+            'poder': recortar(pg.image.load('./resource/enemigos/capitan/poder.png'), 23, 30, 1, 3)}
+    return cap
 
 
 def spritegoku():
@@ -38,21 +44,21 @@ def spriteminion1():
     minion1 = {'standby': recortar(pg.image.load('./resource/enemigos/minion/minion1/standby.png'), 15, 31, 1, 1),
             'walk': recortar(pg.image.load('./resource/enemigos/minion/minion1/walk.png'), 17, 31, 1, 4),
             'golpe': recortar(pg.image.load('./resource/enemigos/minion/minion1/golpe.png'), 23, 31, 1, 4),
-            'poder': recortar(pg.image.load('./resource/enemigos/minion/minion1/poder.png'), 23, 29, 1, 3),}
+            'poder': recortar(pg.image.load('./resource/enemigos/minion/minion1/poder.png'), 23, 29, 1, 3)}
     return minion1
 
 def spritejeice():
     jeice = {'standby': recortar(pg.image.load('./resource/enemigos/Jeice/standby.png'), 15, 31, 1, 1),
             'walk': recortar(pg.image.load('./resource/enemigos/Jeice/walk.png'), 16, 31, 1, 4),
             'golpe': recortar(pg.image.load('./resource/enemigos/Jeice/golpe.png'), 27, 29, 1, 3),
-            'poder': recortar(pg.image.load('./resource/enemigos/Jeice/poder.png'), 26, 29, 1, 3),}
+            'poder': recortar(pg.image.load('./resource/enemigos/Jeice/poder.png'), 26, 29, 1, 3)}
     return jeice
 
 def spriteminion2():
     minion2 = {'standby': recortar(pg.image.load('./resource/enemigos/minion/minion2/standby.png'), 12, 31, 1, 1),
             'walk': recortar(pg.image.load('./resource/enemigos/minion/minion2/walk.png'), 15, 31, 1, 4),
             'golpe': recortar(pg.image.load('./resource/enemigos/minion/minion2/golpe.png'), 24, 31, 1, 4),
-            'poder': recortar(pg.image.load('./resource/enemigos/minion/minion2/poder.png'), 23, 30, 1, 3),}
+            'poder': recortar(pg.image.load('./resource/enemigos/minion/minion2/poder.png'), 23, 30, 1, 3)}
     return minion2
 
 def spritepoder1():
