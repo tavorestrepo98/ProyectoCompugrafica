@@ -44,23 +44,11 @@ class Personaje(pg.sprite.Sprite):
         self.barra = 0
         self.resistencia = 0
         self.salto = False
-
-    def gravedad(self, v):
-        if self.vel_y == 0:
-            self.vel_y = 1
-        else:
-            self.vel_y += v
+        self.salto2 = False
 
     def update(self):
-        self.gravedad(0.9)
         self.rect.x += self.vel_x
         self.rect.y += self.vel_y
-
-        if (self.rect.y > self.yini) and not(self.vel_y == 0):
-            self.vel_y = 0
-            self.rect.y = self.yini
-            self.accion = 'salto'
-            self.con = 0
 
         if self.barra == 100:
             self.nivel += 1

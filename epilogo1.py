@@ -30,9 +30,9 @@ def epilogo1(pant):
     #texto
     fuente=pygame.font.SysFont("comicsansms",20)
     texto1=fuente.render("Devuelveme a mi esposa FREEZERRRRR",True,negro)
-    texto2=fuente.render("No Quiero Basura",True,negro)
+    texto2=fuente.render("Ven Por ella Basura",True,negro)
     texto3=fuente.render("Devuelvemela",True,negro)
-    texto4=fuente.render("Quiero Vengarme Maldito Goku",True,negro)
+    texto4=fuente.render("Me vengare Goku, sabandija",True,negro)
     texto5=fuente.render("No Metas a Milk En Nuestros Asuntos",True,negro)
     texto6=fuente.render("Hare Lo que Sea Para Vengarme",True,negro)
     texto7=fuente.render("Te Vencere FREEZERRRRR",True,negro)

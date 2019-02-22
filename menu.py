@@ -142,13 +142,6 @@ if __name__ == '__main__':
                     goku.vel_x = -8
                     rl = 12
 
-                if event.key == pg.K_UP:
-                    if goku.activateaccion == False:
-                        goku.accion = 'jump'
-                        goku.con = 0
-                        goku.salto = True
-                        rl = 12
-                        goku.activateaccion = True
                 if event.key == pg.K_a:
                     if goku.activateaccion == False:
                         goku.accion = 'golpe2'
@@ -160,7 +153,7 @@ if __name__ == '__main__':
                         for i in ls_colje:
                             i.vida-=10
                             if i.vida<=0:
-                                orb=orbes(mo, i.rect.x,i.rect.y + 70)
+                                orb=orbes(mo, i.rect.x + random.randint(-10, 10) + posx_fondo,i.rect.y + 70)
                                 ob.add(orb)
                                 i.kill()
 
@@ -197,11 +190,6 @@ if __name__ == '__main__':
                     goku.dir = 1
                     goku.con = 0
                     goku.vel_x = 0
-
-        if goku.salto:
-            goku.activateaccion = True
-            goku.vel_y = -10
-            goku.salto = False
 
         for b in balas:
             b.velx_fondo = 0
