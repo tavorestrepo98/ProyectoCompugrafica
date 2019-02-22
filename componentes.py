@@ -40,6 +40,13 @@ def spriteminion1():
             'poder': recortar(pg.image.load('./resource/enemigos/minion/minion1/poder.png'), 23, 29, 1, 3),}
     return minion1
 
+def spritejeice():
+    jeice = {'standby': recortar(pg.image.load('./resource/enemigos/Jeice/standby.png'), 15, 31, 1, 1),
+            'walk': recortar(pg.image.load('./resource/enemigos/Jeice/walk.png'), 16, 31, 1, 4),
+            'golpe': recortar(pg.image.load('./resource/enemigos/Jeice/golpe.png'), 27, 29, 1, 3),
+            'poder': recortar(pg.image.load('./resource/enemigos/Jeice/poder.png'), 26, 29, 1, 3),}
+    return jeice
+
 def spriteminion2():
     minion2 = {'standby': recortar(pg.image.load('./resource/enemigos/minion/minion2/standby.png'), 12, 31, 1, 1),
             'walk': recortar(pg.image.load('./resource/enemigos/minion/minion2/walk.png'), 15, 31, 1, 4),
